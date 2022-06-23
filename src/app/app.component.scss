@@ -1,0 +1,34 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+$color-config: mat.get-color-config(mat.$deep-purple-palette);
+$primary-palette: map.get($color-config, 500);
+
+@debug "Primary color: #{$primary-palette}";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+
+  .active {
+    color: $primary-palette;
+    font-weight: bold;
+  }
+}
