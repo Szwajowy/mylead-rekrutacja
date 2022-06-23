@@ -4,10 +4,14 @@
       Add product
     </button>
   </div>
-  <app-products-table
-    [products]="products"
-    (editProduct)="onEditProduct($event)"
-    (removeProduct)="onRemoveProduct($event)"
-  >
-  </app-products-table>
+  <ng-container *ngIf="products$ | async as products; else loading">
+    <app-products-table
+      [products]="products"
+      (editProduct)="onEditProduct($event)"
+      (removeProduct)="onRemoveProduct($event)"
+    >
+    </app-products-table>
+  </ng-container>
 </div>
+
+<ng-template #loading><mat-spinner></mat-spinner></ng-template>
