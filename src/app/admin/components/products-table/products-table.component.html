@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
+<table mat-table [dataSource]="products" class="table mat-elevation-z8">
   <!-- ID Column -->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -35,9 +35,9 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="onEditProduct(element)">
         <mat-icon>edit</mat-icon></button
-      ><button mat-icon-button color="warn">
+      ><button mat-icon-button color="warn" (click)="onRemoveProduct(element)">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
