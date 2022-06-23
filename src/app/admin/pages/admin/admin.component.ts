@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { Product } from "src/app/shared/models/Product";
+import { ProductsService } from "src/app/shared/services/products.service";
 
 const PRODUCTS_LIST: Product[] = [
   {
@@ -29,7 +30,7 @@ const PRODUCTS_LIST: Product[] = [
 export class AdminComponent implements OnInit {
   products$: Observable<Product[]> = this.getProducts();
 
-  constructor() {}
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {}
 
@@ -40,6 +41,6 @@ export class AdminComponent implements OnInit {
   onRemoveProduct(product: Product): void {}
 
   private getProducts(): Observable<Product[]> {
-    return of(PRODUCTS_LIST);
+    return this.productsService.getAllProducts();
   }
 }
