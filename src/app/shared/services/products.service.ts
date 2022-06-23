@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Observable, ReplaySubject } from "rxjs";
-import { take } from "rxjs/operators";
+import { Observable, ReplaySubject, zip } from "rxjs";
+import { map, take } from "rxjs/operators";
 import { CreateProductService } from "../api/create-product.service";
 
 import { GetProductsService } from "../api/get-products.service";
@@ -19,7 +19,17 @@ export class ProductsService {
     this.getAllProducts();
   }
 
-  constructor(private getProductsService: GetProductsService) {}
+  createProduct(product: Product): Observable<Product> {
+    const createProduct$ = this.createProductService.createProduct(product);
+    const getProducts$ = this.products$;
+
+    return zip(createProduct$, getProducts$).pipe(
+      map(([newProduct, products]: [Product, Product[]]) => {
+        this.addProductToStore(newProduct, products);
+        return newProduct;
+      })
+    );
+  }
 
   private getAllProducts(): void {
     this.getProductsService
@@ -28,5 +38,13 @@ export class ProductsService {
       .subscribe((products: Product[]) => {
         this.products$.next(products);
       });
+  }
+
+  private addProductToStore(
+    newProduct: Product,
+    productsState: Product[]
+  ): void {
+    productsState.push(newProduct);
+    this.products$.next(productsState);
   }
 }
