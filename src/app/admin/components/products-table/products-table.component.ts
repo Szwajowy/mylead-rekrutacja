@@ -26,7 +26,14 @@ const PRODUCTS_LIST: Product[] = [
   styleUrls: ["./products-table.component.scss"],
 })
 export class ProductsTableComponent implements OnInit {
-  displayedColumns: string[] = ["id", "name", "description", "type", "image"];
+  displayedColumns: string[] = [
+    "id",
+    "name",
+    "description",
+    "type",
+    "image",
+    "actions",
+  ];
   dataSource = PRODUCTS_LIST;
 
   constructor() {}
