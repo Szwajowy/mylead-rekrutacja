@@ -45,6 +45,6 @@ export class ProductsService {
     productsState: Product[]
   ): void {
     productsState.push(newProduct);
-    this.products$.next(productsState);
+    this.products$.next([...productsState]);
   }
 }
