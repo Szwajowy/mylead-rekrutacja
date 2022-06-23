@@ -28,7 +28,7 @@ const PRODUCTS_LIST: Product[] = [
   styleUrls: ["./admin.component.scss"],
 })
 export class AdminComponent implements OnInit {
-  products$: Observable<Product[]> = this.getProducts();
+  products$: Observable<Product[]> = this.productsService.products$;
 
   constructor(private productsService: ProductsService) {}
 
@@ -39,8 +39,4 @@ export class AdminComponent implements OnInit {
   onEditProduct(product: Product): void {}
 
   onRemoveProduct(product: Product): void {}
-
-  private getProducts(): Observable<Product[]> {
-    return this.productsService.getAllProducts();
-  }
 }
