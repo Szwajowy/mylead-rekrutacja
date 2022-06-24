@@ -16,9 +16,12 @@ export class PricesService {
   }
 
   private getAllPrices(): void {
-    this.getPricesService.getAllPrices().subscribe((prices: Price[]) => {
-      this.prices$.next(prices);
-    });
+    this.getPricesService
+      .getAllPrices()
+      .pipe(take(1))
+      .subscribe((prices: Price[]) => {
+        this.prices$.next(prices);
+      });
   }
 
   getPricesForProduct(productId: number): Observable<Price[]> {
