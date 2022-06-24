@@ -6,15 +6,20 @@ import { EditProductService } from "../api/edit-product.service";
 
 import { GetProductsService } from "../api/get-products.service";
 import { RemoveProductService } from "../api/remove-product.service";
+import { Price } from "../models/Price";
 import { Product } from "../models/Product";
+import { ProductWithPrices } from "../models/ProductWithPrices";
+import { PricesService } from "./prices.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProductsService {
   products$: ReplaySubject<Product[]> = new ReplaySubject();
+  productsWithPrices$: ReplaySubject<ProductWithPrices[]> = new ReplaySubject();
 
   constructor(
+    private pricesService: PricesService,
     private getProductsService: GetProductsService,
     private createProductService: CreateProductService,
     private editProductService: EditProductService,
@@ -68,6 +73,22 @@ export class ProductsService {
       .subscribe((products: Product[]) => {
         this.products$.next(products);
       });
+  }
+
+  private getAllProductsWithPrices(): Observable<ProductWithPrices[]> {
+    const prices$ = this.pricesService.prices$;
+    return zip(this.products$, prices$).pipe(
+      map(([products, prices]: [Product[], Price[]]) => {
+        products.map((product) => {
+          return {
+            ...product,
+            prices,
+          };
+        });
+
+        return products as ProductWithPrices[];
+      })
+    );
   }
 
   private addProductToStore(
