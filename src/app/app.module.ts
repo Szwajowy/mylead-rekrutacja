@@ -17,6 +17,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
+import { MatBadgeModule } from "@angular/material/badge";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -25,6 +26,7 @@ import { ProductsComponent } from "./products/pages/products/products.component"
 import { ProductsTableComponent } from "./admin/components/products-table/products-table.component";
 import { CreateProductComponent } from "./admin/dialogs/create-product/create-product.component";
 import { RemoveProductComponent } from "./admin/dialogs/remove-product/remove-product.component";
+import { PricePipe } from "./shared/pipes/price.pipe";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { RemoveProductComponent } from "./admin/dialogs/remove-product/remove-pr
     ProductsTableComponent,
     CreateProductComponent,
     RemoveProductComponent,
+    PricePipe,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { RemoveProductComponent } from "./admin/dialogs/remove-product/remove-pr
     ReactiveFormsModule,
 
     MatChipsModule,
+    MatBadgeModule,
     MatCardModule,
     MatSidenavModule,
     MatCheckboxModule,

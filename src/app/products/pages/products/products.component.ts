@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { Product } from "src/app/shared/models/Product";
+import { tap } from "rxjs/operators";
+
+import { ProductWithPrices } from "src/app/shared/models/ProductWithPrices";
 import { ProductsService } from "src/app/shared/services/products.service";
 
 @Component({
@@ -9,7 +11,8 @@ import { ProductsService } from "src/app/shared/services/products.service";
   styleUrls: ["./products.component.scss"],
 })
 export class ProductsComponent implements OnInit {
-  products$: Observable<Product[]> = this.productsService.products$;
+  products$: Observable<ProductWithPrices[]> =
+    this.productsService.productsWithPrices$;
 
   constructor(private productsService: ProductsService) {}
 
