@@ -15,6 +15,8 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatCardModule } from "@angular/material/card";
+import { MatChipsModule } from "@angular/material/chips";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -40,6 +42,8 @@ import { RemoveProductComponent } from "./admin/dialogs/remove-product/remove-pr
     HttpClientModule,
     ReactiveFormsModule,
 
+    MatChipsModule,
+    MatCardModule,
     MatSidenavModule,
     MatCheckboxModule,
     MatToolbarModule,

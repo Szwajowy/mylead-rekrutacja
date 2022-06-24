@@ -1,0 +1,14 @@
+.container {
+  width: 80%;
+  margin: 4em auto;
+
+  .products-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+  }
+
+  .card-content {
+    margin-top: 0.6em;
+  }
+}
