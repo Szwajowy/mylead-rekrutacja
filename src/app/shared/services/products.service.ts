@@ -14,7 +14,7 @@ export class ProductsService {
 
   constructor(
     private getProductsService: GetProductsService,
-    private createProductService: CreateProductService
+    private createProductService: CreateProductService,
   ) {
     this.getAllProducts();
   }

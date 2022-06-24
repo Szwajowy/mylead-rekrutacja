@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Create product</h2>
+<mat-dialog-content>
+  <form [formGroup]="productForm" class="product-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="productForm.controls['name'].invalid"
+        >This name is too short</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" required />
+      <mat-error *ngIf="productForm.controls['description'].invalid"
+        >This description is too short</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <input matInput formControlName="type" required />
+      <mat-error *ngIf="productForm.controls['type'].invalid"
+        >This type is too short</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Image</mat-label>
+      <input matInput formControlName="image" type="url" required />
+      <mat-error *ngIf="productForm.controls['image'].invalid"
+        >This image is invalid</mat-error
+      >
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="productForm.invalid"
+    (click)="onCreateProduct()"
+  >
+    Create
+  </button>
+</mat-dialog-actions>

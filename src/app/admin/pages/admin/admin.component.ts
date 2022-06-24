@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable, take } from "rxjs";
+
+import { MatDialog } from "@angular/material/dialog";
+
 import { Product } from "src/app/shared/models/Product";
 import { ProductsService } from "src/app/shared/services/products.service";
+import { CreateProductComponent } from "../../dialogs/create-product/create-product.component";
 
 const PRODUCTS_LIST: Product[] = [
   {
@@ -30,11 +34,30 @@ const PRODUCTS_LIST: Product[] = [
 export class AdminComponent implements OnInit {
   products$: Observable<Product[]> = this.productsService.products$;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private dialog: MatDialog,
+    private productsService: ProductsService
+  ) {}
 
   ngOnInit(): void {}
 
-  onAddProduct(): void {}
+  onAddProduct(): void {
+    let dialogRef = this.dialog.open(CreateProductComponent, {
+      width: "600px",
+      data: {
+        inEditMode: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((newProduct: Product) => {
+      if (typeof newProduct === "object") {
+        this.productsService
+          .createProduct(newProduct)
+          .pipe(take(1))
+          .subscribe();
+      }
+    });
+  }
 
   onEditProduct(product: Product): void {}
 
