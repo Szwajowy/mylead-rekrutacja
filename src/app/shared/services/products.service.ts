@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, ReplaySubject, zip } from "rxjs";
+import { combineLatest, Observable, ReplaySubject, zip } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { CreateProductService } from "../api/create-product.service";
 import { EditProductService } from "../api/edit-product.service";
@@ -16,7 +16,8 @@ import { PricesService } from "./prices.service";
 })
 export class ProductsService {
   products$: ReplaySubject<Product[]> = new ReplaySubject();
-  productsWithPrices$: ReplaySubject<ProductWithPrices[]> = new ReplaySubject();
+  productsWithPrices$: Observable<ProductWithPrices[]> =
+    this.getAllProductsWithPrices();
 
   constructor(
     private pricesService: PricesService,
@@ -77,16 +78,19 @@ export class ProductsService {
 
   private getAllProductsWithPrices(): Observable<ProductWithPrices[]> {
     const prices$ = this.pricesService.prices$;
-    return zip(this.products$, prices$).pipe(
+    return combineLatest([this.products$, prices$]).pipe(
       map(([products, prices]: [Product[], Price[]]) => {
-        products.map((product) => {
+        const productsWithPrices = products.map((product) => {
+          const pricesOfProduct = prices.filter(
+            (price) => price.productId === product.id
+          );
           return {
             ...product,
-            prices,
-          };
+            prices: pricesOfProduct,
+          } as ProductWithPrices;
         });
 
-        return products as ProductWithPrices[];
+        return productsWithPrices;
       })
     );
   }
