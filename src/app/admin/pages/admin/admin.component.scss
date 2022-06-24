@@ -3,8 +3,11 @@
   margin: 0 auto;
   padding: 4em 0;
 
-  .buttons {
+  .header {
     margin-bottom: 2em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
   }
 
   .spinner {

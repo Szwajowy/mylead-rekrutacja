@@ -1,9 +1,13 @@
 <div class="content">
-  <div class="buttons">
-    <button mat-raised-button color="primary" (click)="onAddProduct()">
-      Add product
-    </button>
+  <div class="header">
+    <h1>Administration</h1>
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="onAddProduct()">
+        Add product
+      </button>
+    </div>
   </div>
+
   <ng-container *ngIf="products$ | async as products; else loading">
     <app-products-table
       [products]="products"
