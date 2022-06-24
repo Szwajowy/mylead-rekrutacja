@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Remove product</h2>
+<mat-dialog-content>
+  <p>Are you sure that you want to remove this user?</p>
+  <div class="product-info">
+    <img [src]="data.product?.image" />
+    <ul>
+      <li>Name: {{ data.product?.name }}</li>
+      <li>Description: {{ data.product?.description }}</li>
+      <li>Type: {{ data.product?.type }}</li>
+    </ul>
+  </div>
+  <mat-checkbox
+    class="example-margin"
+    color="primary"
+    [formControl]="isAcceptingRisk"
+    >I want to remove this product</mat-checkbox
+  >
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="!isAcceptingRisk.value"
+    [mat-dialog-close]="isAcceptingRisk.value"
+  >
+    Remove
+  </button>
+</mat-dialog-actions>

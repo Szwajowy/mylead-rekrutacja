@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -21,6 +22,7 @@ import { AdminComponent } from "./admin/pages/admin/admin.component";
 import { ProductsComponent } from "./products/pages/products/products.component";
 import { ProductsTableComponent } from "./admin/components/products-table/products-table.component";
 import { CreateProductComponent } from "./admin/dialogs/create-product/create-product.component";
+import { RemoveProductComponent } from "./admin/dialogs/remove-product/remove-product.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { CreateProductComponent } from "./admin/dialogs/create-product/create-pr
     ProductsComponent,
     ProductsTableComponent,
     CreateProductComponent,
+    RemoveProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { CreateProductComponent } from "./admin/dialogs/create-product/create-pr
     ReactiveFormsModule,
 
     MatSidenavModule,
+    MatCheckboxModule,
     MatToolbarModule,
     MatListModule,
     MatIconModule,

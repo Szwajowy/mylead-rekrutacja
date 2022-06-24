@@ -5,6 +5,7 @@ import { CreateProductService } from "../api/create-product.service";
 import { EditProductService } from "../api/edit-product.service";
 
 import { GetProductsService } from "../api/get-products.service";
+import { RemoveProductService } from "../api/remove-product.service";
 import { Product } from "../models/Product";
 
 @Injectable({
@@ -17,6 +18,7 @@ export class ProductsService {
     private getProductsService: GetProductsService,
     private createProductService: CreateProductService,
     private editProductService: EditProductService,
+    private removeProductService: RemoveProductService
   ) {
     this.getAllProducts();
   }
@@ -41,6 +43,20 @@ export class ProductsService {
       map(([modifiedProduct, products]: [Product, Product[]]) => {
         this.editProductInStore(modifiedProduct, products);
         return modifiedProduct;
+      })
+    );
+  }
+
+  removeProduct(product: Product): Observable<Product | null> {
+    const removeProduct$ = this.removeProductService.removeProduct(product);
+    const getProducts$ = this.products$;
+
+    return zip(removeProduct$, getProducts$).pipe(
+      map(([removedProduct, products]: [Product, Product[]]) => {
+        if (!product.id) return null;
+
+        this.removeProductFromStore(product.id, products);
+        return removedProduct;
       })
     );
   }
@@ -70,6 +86,17 @@ export class ProductsService {
       (product) => product.id === modifiedProduct.id
     );
     productsState[indexOfProductToModify] = modifiedProduct;
+    this.products$.next([...productsState]);
+  }
+
+  private removeProductFromStore(
+    productId: number,
+    productsState: Product[]
+  ): void {
+    const indexOfProductToRemove = productsState.findIndex(
+      (product) => product.id === productId
+    );
+    productsState.splice(indexOfProductToRemove);
     this.products$.next([...productsState]);
   }
 }

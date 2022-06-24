@@ -1,0 +1,13 @@
+.product-info {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 2em;
+
+  img {
+    width: 30%;
+  }
+
+  ul {
+    list-style: none;
+  }
+}
