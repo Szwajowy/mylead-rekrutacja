@@ -121,7 +121,7 @@ export class ProductsService {
     const indexOfProductToRemove = productsState.findIndex(
       (product) => product.id === productId
     );
-    productsState.splice(indexOfProductToRemove);
+    productsState.splice(indexOfProductToRemove, 1);
     this.products$.next([...productsState]);
   }
 }

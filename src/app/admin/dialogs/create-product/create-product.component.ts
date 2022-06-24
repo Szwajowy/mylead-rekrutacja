@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Price } from "src/app/shared/models/Price";
 import { Product } from "src/app/shared/models/Product";
+import { ProductWithPrices } from "src/app/shared/models/ProductWithPrices";
 
 export interface CreateProductDialogData {
   inEditMode: boolean;
@@ -31,6 +33,7 @@ export class CreateProductComponent implements OnInit {
       this.data?.product?.image || "",
       [Validators.required, Validators.minLength(3)],
     ],
+    price: ["", [Validators.required, Validators.min(0)]],
   });
 
   constructor(
@@ -42,12 +45,20 @@ export class CreateProductComponent implements OnInit {
   ngOnInit(): void {}
 
   onCreateProduct() {
-    let formValue;
+    let product!: Product;
+    let price!: Price;
 
     if (!this.productForm.invalid) {
-      formValue = this.productForm.getRawValue();
+      const formValues = this.productForm.getRawValue();
+      product = {
+        name: formValues.name,
+        description: formValues.description,
+        type: formValues.type,
+        image: formValues.image,
+      };
+      price = formValues.price;
     }
 
-    this.dialogRef.close(formValue);
+    this.dialogRef.close({ product, priceValue: price });
   }
 }

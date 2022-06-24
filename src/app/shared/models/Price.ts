@@ -1,5 +1,5 @@
 export interface Price {
-  id: number;
+  id?: number;
   value: number;
   productId: number;
   createdAt: Date;

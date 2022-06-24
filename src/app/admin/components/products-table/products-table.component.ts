@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Product } from "src/app/shared/models/Product";
+import { ProductWithPrices } from "src/app/shared/models/ProductWithPrices";
 
 @Component({
   selector: "app-products-table",
@@ -13,22 +13,23 @@ export class ProductsTableComponent implements OnInit {
     "description",
     "type",
     "image",
+    "last_price",
     "actions",
   ];
 
-  @Input() products: Product[] = [];
-  @Output() editProduct: EventEmitter<Product> = new EventEmitter();
-  @Output() removeProduct: EventEmitter<Product> = new EventEmitter();
+  @Input() products: ProductWithPrices[] = [];
+  @Output() editProduct: EventEmitter<ProductWithPrices> = new EventEmitter();
+  @Output() removeProduct: EventEmitter<ProductWithPrices> = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onEditProduct(product: Product): void {
+  onEditProduct(product: ProductWithPrices): void {
     this.editProduct.emit(product);
   }
 
-  onRemoveProduct(product: Product): void {
+  onRemoveProduct(product: ProductWithPrices): void {
     this.removeProduct.emit(product);
   }
 }

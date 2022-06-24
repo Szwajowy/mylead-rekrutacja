@@ -29,6 +29,14 @@
         >This image is invalid</mat-error
       >
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" type="number" min="0" required />
+      <p matSuffix>zł</p>
+      <mat-error *ngIf="productForm.controls['price'].invalid"
+        >This price is invalid</mat-error
+      >
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
