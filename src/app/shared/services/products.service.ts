@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject, zip } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { CreateProductService } from "../api/create-product.service";
+import { EditProductService } from "../api/edit-product.service";
 
 import { GetProductsService } from "../api/get-products.service";
 import { Product } from "../models/Product";
@@ -15,6 +16,7 @@ export class ProductsService {
   constructor(
     private getProductsService: GetProductsService,
     private createProductService: CreateProductService,
+    private editProductService: EditProductService,
   ) {
     this.getAllProducts();
   }
@@ -27,6 +29,18 @@ export class ProductsService {
       map(([newProduct, products]: [Product, Product[]]) => {
         this.addProductToStore(newProduct, products);
         return newProduct;
+      })
+    );
+  }
+
+  editProduct(product: Product): Observable<Product> {
+    const editProduct$ = this.editProductService.editProduct(product);
+    const getProducts$ = this.products$;
+
+    return zip(editProduct$, getProducts$).pipe(
+      map(([modifiedProduct, products]: [Product, Product[]]) => {
+        this.editProductInStore(modifiedProduct, products);
+        return modifiedProduct;
       })
     );
   }
@@ -45,6 +59,17 @@ export class ProductsService {
     productsState: Product[]
   ): void {
     productsState.push(newProduct);
+    this.products$.next([...productsState]);
+  }
+
+  private editProductInStore(
+    modifiedProduct: Product,
+    productsState: Product[]
+  ): void {
+    const indexOfProductToModify = productsState.findIndex(
+      (product) => product.id === modifiedProduct.id
+    );
+    productsState[indexOfProductToModify] = modifiedProduct;
     this.products$.next([...productsState]);
   }
 }

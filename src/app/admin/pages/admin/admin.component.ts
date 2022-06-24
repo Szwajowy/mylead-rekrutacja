@@ -59,7 +59,25 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  onEditProduct(product: Product): void {}
+  onEditProduct(product: Product): void {
+    let dialogRef = this.dialog.open(CreateProductComponent, {
+      width: "600px",
+      data: {
+        inEditMode: true,
+        product,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((modifiedProduct: Product) => {
+      if (typeof modifiedProduct === "object") {
+        modifiedProduct.id = product.id;
+        this.productsService
+          .editProduct(modifiedProduct)
+          .pipe(take(1))
+          .subscribe();
+      }
+    });
+  }
 
   onRemoveProduct(product: Product): void {}
 }

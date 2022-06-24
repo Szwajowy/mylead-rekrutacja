@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Create product</h2>
+<h2 mat-dialog-title>{{ data.inEditMode ? "Edit" : "Create" }} product</h2>
 <mat-dialog-content>
   <form [formGroup]="productForm" class="product-form">
     <mat-form-field appearance="fill">
@@ -35,9 +35,9 @@
   <button mat-button mat-dialog-close>Cancel</button>
   <button
     mat-button
-    [disabled]="productForm.invalid"
+    [disabled]="productForm.invalid || productForm.pristine"
     (click)="onCreateProduct()"
   >
-    Create
+    {{ data.inEditMode ? "Edit" : "Create" }}
   </button>
 </mat-dialog-actions>
