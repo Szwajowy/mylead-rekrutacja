@@ -12,7 +12,7 @@ export class GetPricesService {
   constructor(private http: HttpClient) {}
 
   getAllPrices(): Observable<Price[]> {
-    return this.http.get<Price[]>(`${API_URL} + ${API_ENDPOINTS.prices}`);
+    return this.http.get<Price[]>(`${API_URL}${API_ENDPOINTS.prices}`);
   }
 
   getPricesForProduct(productId: number): Observable<Price[]> {
